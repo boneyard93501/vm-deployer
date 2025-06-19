@@ -1,0 +1,40 @@
+# Fluence VM Deployment Configuration
+# Place this file as: ./deployment_config.yaml
+
+# Application Configuration
+apiBaseUrl: "https://api.fluence.dev"
+configFilePath: "./deployment_config.yaml"
+enableConsoleOutput: true
+
+# VM Status Polling Configuration
+deploymentTimeoutSeconds: 600      # Max time to wait for VM to be Active
+pollIntervalSeconds: 30            # How often to check VM status (increased to avoid rate limits)
+enableStatusPolling: true          # Whether to wait for Active status
+enableIpRetrieval: true            # Whether to get IP addresses
+
+# HTTP Client Configuration
+httpTimeoutSeconds: 120            # HTTP request timeout (2 minutes)
+
+# VM Cleanup Configuration
+batchDeleteEnabled: true          # Whether to delete VMs after deployment
+deleteDelaySeconds: 0             # Delay before deletion (0 = immediate)
+
+# Deployment Approach Configuration
+enableBulkApproach: true          # Whether to run bulk approach (one API call with instances: N)
+enableDecomposedApproach: true    # Whether to run decomposed approach (N separate API calls)
+
+deployments:
+  # Deployment 1
+  - vmConfig:
+      name: "app-server"
+      basicConfiguration: "cpu-2-ram-4gb-storage-25gb"
+      openPorts:
+        - port: 22
+          protocol: "tcp"
+      hostname: "bb-test-server"
+      osImage: "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+      sshKeys: []  # Will use SSH keys from .env file if empty
+    datacenter:
+      countries: ["PL"]
+    instances: 3
+    maxPricePerEpochUsd: 2.0  # ~$0.33/core/day x 2 cores x 3 instances
