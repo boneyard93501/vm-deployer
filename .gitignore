@@ -1,0 +1,22 @@
+# Rust build artifacts
+/target/
+
+# Cargo lock file for libraries
+Cargo.lock
+
+# Backup files
+**/*.rs.bk
+
+# macOS system files
+.DS_Store
+
+# VS Code settings (optional)
+.vscode/
+
+# Executables and temp files
+*.log
+*.tmp
+*.swp
+
+#secrets
+.env
